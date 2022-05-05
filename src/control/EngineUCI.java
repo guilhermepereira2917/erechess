@@ -7,12 +7,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import partida.model.Movimento;
 
-public class EngineUCI {
+public class EngineUCI extends Thread {
 
     Process engine;
+    ArrayList<String> movimentos;
     
     InputStream input;
     BufferedReader reader;
@@ -29,25 +30,65 @@ public class EngineUCI {
 
             reader = new BufferedReader(new InputStreamReader(input));
             writer = new BufferedWriter(new OutputStreamWriter(output));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void enviarMovimento(String movimento) {
-        try {
-            writer.write("position startpos moves" + movimento + "\n");
-            writer.flush();
             
-            writer.write("go");
-            writer.flush();
+            movimentos = new ArrayList();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public String receberMovimento() {
-        
+    public void receberMovimento(String movimento) {
+        try {
+            movimentos.add(movimento);
+            
+            String parse = "";
+            for (String jogado: movimentos) {
+                parse += jogado + " ";
+            }
+            
+            writer.write("position startpos moves " + parse + "\n");
+            writer.flush();
+
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        sleep(1000);
+                        writer.write("stop\n");
+                        writer.flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }.start();
+
+            writer.write("go\n");
+            writer.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public String enviarMovimento() {
+        try {
+
+            String line, move = null;
+            while ((line = reader.readLine()) != null) {
+                if (line.split(" ")[0].equals("bestmove")) {
+                    move = line.split(" ")[1];
+                    break;
+                }
+            }
+            
+            System.out.println(move);
+            movimentos.add(move);
+            
+            return move;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }

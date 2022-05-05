@@ -6,11 +6,12 @@ import partida.view.ButtonCasa;
 public class ControladorEngine extends Controlador {
 
     EngineUCI stockfish = new EngineUCI();
-    
+
     public ControladorEngine() {
         super();
+        stockfish.start();
     }
-    
+
     @Override
     protected void adicionarListenerBotoes() {
         movimentoListener = new ControladorEngine.MovimentoEngineListener();
@@ -31,8 +32,11 @@ public class ControladorEngine extends Controlador {
             super.actionPerformed(e);
 
             if (sucessoUltimoMovimento) {
-                stockfish.enviarMovimento(ultimoMovimento.toString());
-                stockfish.receberMovimento();
+                stockfish.receberMovimento(ultimoMovimento.toString());
+                
+                String movimento = stockfish.enviarMovimento();
+                tabuleiro.realizarMovimento(movimento);
+                
                 sucessoUltimoMovimento = false;
             }
 

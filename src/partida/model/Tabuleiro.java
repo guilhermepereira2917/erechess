@@ -127,15 +127,20 @@ public class Tabuleiro extends Observable {
 
     }
 
+    public boolean realizarMovimento(String movimento) {
+        Movimento movimentoConvertido = new Movimento(movimento, this);
+        return realizarMovimento(movimentoConvertido);
+    }
+
     public boolean realizarMovimento(Movimento movimento) {
 
         // O movimento nao foi encontrado
         if (movimento == null) {
             return false;
         }
-        
+
         Peca peca = movimento.getPeca();
-        
+
         // Valida a seleção de casas do movimento, antes de realizar a validação do movimento em si
         if (movimento.validarSelecao() && peca.validarMovimento(movimento)) {
             if (!peca.realizarMovimento(movimento)) {
@@ -256,7 +261,7 @@ public class Tabuleiro extends Observable {
         }
         return null;
     }
-    
+
     @Override
     public String toString() {
         String string = "";
