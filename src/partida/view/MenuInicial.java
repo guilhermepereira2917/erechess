@@ -1,6 +1,7 @@
 package partida.view;
 
 import control.Controlador;
+import control.ControladorEngine;
 import java.awt.CardLayout;
 import server.view.InputSocketCliente;
 import server.view.InputSocketServidor;
@@ -8,7 +9,7 @@ import server.view.InputSocketServidor;
 public class MenuInicial extends javax.swing.JFrame {
 
     CardLayout cardLayout;
-    final String cardJogar = "cardJogar", cardInicial = "cardInicial", cardOnline = "cardOnline";
+    final String cardJogar = "cardJogar", cardInicial = "cardInicial", cardOnline = "cardOnline", cardOffline = "cardOffline";
     
     public MenuInicial() {
         initComponents();
@@ -33,6 +34,10 @@ public class MenuInicial extends javax.swing.JFrame {
         buttonCriar = new javax.swing.JButton();
         buttonConectar = new javax.swing.JButton();
         buttonVoltarPanelJogar = new javax.swing.JButton();
+        panelOffline = new javax.swing.JPanel();
+        buttonAmigo = new javax.swing.JButton();
+        buttonComputador = new javax.swing.JButton();
+        buttonVoltarPanelJogar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,6 +193,56 @@ public class MenuInicial extends javax.swing.JFrame {
 
         panelContainer.add(panelOnline, "cardOnline");
 
+        buttonAmigo.setText("Jogar contra um amigo");
+        buttonAmigo.setFocusable(false);
+        buttonAmigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAmigoActionPerformed(evt);
+            }
+        });
+
+        buttonComputador.setText("Jogar contra a máquina");
+        buttonComputador.setFocusable(false);
+        buttonComputador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonComputadorActionPerformed(evt);
+            }
+        });
+
+        buttonVoltarPanelJogar1.setText("Voltar");
+        buttonVoltarPanelJogar1.setFocusable(false);
+        buttonVoltarPanelJogar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonVoltarPanelJogar1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelOfflineLayout = new javax.swing.GroupLayout(panelOffline);
+        panelOffline.setLayout(panelOfflineLayout);
+        panelOfflineLayout.setHorizontalGroup(
+            panelOfflineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOfflineLayout.createSequentialGroup()
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addGroup(panelOfflineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(buttonAmigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonComputador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonVoltarPanelJogar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        panelOfflineLayout.setVerticalGroup(
+            panelOfflineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOfflineLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonAmigo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonComputador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonVoltarPanelJogar1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelContainer.add(panelOffline, "cardOffline");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -228,8 +283,7 @@ public class MenuInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonVoltarActionPerformed
 
     private void buttonOfflineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOfflineActionPerformed
-        dispose();
-        new Controlador();
+        cardLayout.show(panelContainer, cardOffline);
     }//GEN-LAST:event_buttonOfflineActionPerformed
 
     private void buttonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConectarActionPerformed
@@ -249,6 +303,20 @@ public class MenuInicial extends javax.swing.JFrame {
         InputSocketServidor.criarServidor();
     }//GEN-LAST:event_buttonCriarActionPerformed
 
+    private void buttonAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAmigoActionPerformed
+        dispose();
+        new Controlador();
+    }//GEN-LAST:event_buttonAmigoActionPerformed
+
+    private void buttonComputadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonComputadorActionPerformed
+        dispose();
+        new ControladorEngine();
+    }//GEN-LAST:event_buttonComputadorActionPerformed
+
+    private void buttonVoltarPanelJogar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVoltarPanelJogar1ActionPerformed
+        cardLayout.show(panelContainer, cardJogar);
+    }//GEN-LAST:event_buttonVoltarPanelJogar1ActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -258,6 +326,8 @@ public class MenuInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAmigo;
+    private javax.swing.JButton buttonComputador;
     private javax.swing.JButton buttonConectar;
     private javax.swing.JButton buttonCriar;
     private javax.swing.JButton buttonInformacoes;
@@ -267,10 +337,12 @@ public class MenuInicial extends javax.swing.JFrame {
     private javax.swing.JButton buttonSair;
     private javax.swing.JButton buttonVoltar;
     private javax.swing.JButton buttonVoltarPanelJogar;
+    private javax.swing.JButton buttonVoltarPanelJogar1;
     private javax.swing.JLabel labelErechess;
     private javax.swing.JPanel panelContainer;
     private javax.swing.JPanel panelInicial;
     private javax.swing.JPanel panelJogar;
+    private javax.swing.JPanel panelOffline;
     private javax.swing.JPanel panelOnline;
     // End of variables declaration//GEN-END:variables
 }
