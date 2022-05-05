@@ -14,7 +14,7 @@ public class EngineUCI extends Thread {
 
     Process engine;
     ArrayList<String> movimentos;
-    
+
     InputStream input;
     BufferedReader reader;
 
@@ -30,7 +30,7 @@ public class EngineUCI extends Thread {
 
             reader = new BufferedReader(new InputStreamReader(input));
             writer = new BufferedWriter(new OutputStreamWriter(output));
-            
+
             movimentos = new ArrayList();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -39,14 +39,20 @@ public class EngineUCI extends Thread {
 
     public void receberMovimento(String movimento) {
         try {
-            movimentos.add(movimento);
-            
-            String parse = "";
-            for (String jogado: movimentos) {
-                parse += jogado + " ";
+
+            if (movimento != null) {
+                movimentos.add(movimento);
+
+                String parser = "";
+                for (String jogado : movimentos) {
+                    parser += jogado + " ";
+                }
+
+                writer.write("position startpos moves " + parser + "\n");
+            } else {
+                writer.write("ucinewgame\n");
             }
             
-            writer.write("position startpos moves " + parse + "\n");
             writer.flush();
 
             new Thread() {
@@ -80,10 +86,10 @@ public class EngineUCI extends Thread {
                     break;
                 }
             }
-            
+
             System.out.println(move);
             movimentos.add(move);
-            
+
             return move;
         } catch (IOException ex) {
             ex.printStackTrace();

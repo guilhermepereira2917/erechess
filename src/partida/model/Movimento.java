@@ -34,6 +34,11 @@ public class Movimento {
     public Movimento(String movimento, Tabuleiro tabuleiro) {
         String primeiraCasa = movimento.substring(0, 2);
         String segundaCasa = movimento.substring(2, 4);
+        
+        if (movimento.length() == 5) {
+            String pecaCoroacao = movimento.substring(5, 5);
+            this.argumentoOpcional = pecaCoroacao;
+        }
 
         Casa primeiraCasaConvertida = null, segundaCasaConvertida = null;
         Casa casas[][] = tabuleiro.getCasas();
@@ -54,12 +59,11 @@ public class Movimento {
                 }
             }
         }
-        
+
         Movimento movimentoConvertido = tabuleiro.getMovimento(primeiraCasaConvertida, segundaCasaConvertida);
-        
+
         this.casaInicial = movimentoConvertido.getCasaInicial();
         this.casaFinal = movimentoConvertido.getCasaFinal();
-        this.argumentoOpcional = movimentoConvertido.getArgumentoOpcional();
         this.tipo = movimentoConvertido.getTipo();
     }
 

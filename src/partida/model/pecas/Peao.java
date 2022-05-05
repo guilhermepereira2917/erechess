@@ -65,15 +65,19 @@ public class Peao extends Peca {
 
         switch (opcao) {
             case "Dama":
+            case "q":
                 pecaFinal = new Dama(cor);
                 break;
             case "Torre":
+            case "r":
                 pecaFinal = new Torre(cor);
                 break;
             case "Bispo":
+            case "b":
                 pecaFinal = new Bispo(cor);
                 break;
             case "Cavalo":
+            case "n":
                 pecaFinal = new Cavalo(cor);
                 break;
             default:
