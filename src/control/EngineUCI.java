@@ -2,13 +2,13 @@ package control;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import partida.model.Movimento;
 
 public class EngineUCI extends Thread {
 
@@ -23,7 +23,8 @@ public class EngineUCI extends Thread {
 
     public EngineUCI() {
         try {
-            engine = Runtime.getRuntime().exec("stockfish.exe");
+            String path = new File("src\\engines\\stockfish.exe").getAbsolutePath();
+            engine = Runtime.getRuntime().exec(path);
 
             input = engine.getInputStream();
             output = engine.getOutputStream();
