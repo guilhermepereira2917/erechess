@@ -6,7 +6,7 @@ import partida.model.pecas.Peca;
 public class Movimento {
 
     private Casa casaInicial, casaFinal;
-    private TiposMovimentoEspecial tipo = TiposMovimentoEspecial.NENHUM;
+    private TiposMovimentoEspecial tipo = TiposMovimentoEspecial.NORMAL;
     private String argumentoOpcional = null;
 
     public Movimento(Casa casaInicial, Casa casaFinal) {
@@ -116,7 +116,7 @@ public class Movimento {
     }
 
     public boolean eEspecial() {
-        return tipo != TiposMovimentoEspecial.NENHUM;
+        return tipo != TiposMovimentoEspecial.NORMAL;
     }
 
     public TiposMovimentoEspecial getTipo() {

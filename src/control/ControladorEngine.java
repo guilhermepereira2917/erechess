@@ -1,5 +1,6 @@
 package control;
 
+import partida.model.EngineUCI;
 import enums.Cores;
 import java.awt.event.ActionEvent;
 import partida.view.ButtonCasa;

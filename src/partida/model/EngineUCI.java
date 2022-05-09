@@ -1,4 +1,4 @@
-package control;
+package partida.model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
